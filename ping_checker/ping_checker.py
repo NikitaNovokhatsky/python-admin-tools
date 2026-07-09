@@ -1,5 +1,6 @@
 import subprocess
 import argparse
+import logging
 
 
 def check_host(host):
@@ -10,8 +11,10 @@ def check_host(host):
     )
 
     if result.returncode == 0:
+        logging.info(f"{host} is ONLINE")
         return True
-
+    
+    logging.error(f"{host} is OFFLINE")
     return False
 
 
@@ -32,6 +35,11 @@ def main():
     else:
         print(f"{args.host} is OFFLINE")
 
+logging.basicConfig(
+    filename="logs/ping_checker.log",
+    level=logging.INFO,
+    format="%(asctime)s | %(levelname)s | %(message)s"
+)
 
 if __name__ == "__main__":
     main()

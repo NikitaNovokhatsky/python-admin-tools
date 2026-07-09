@@ -20,6 +20,19 @@ The tool uses the system ping command and analyzes the result.
 - Python 3.x
 - Windows/Linux/macOS
 
+## Logging
+
+The application stores execution results in:
+
+
+logs/ping_checker.log
+
+
+Example:
+
+
+2026-07-09 12:30:55 | INFO | google.com is ONLINE
+
 ## Usage
 
 Run the script:
