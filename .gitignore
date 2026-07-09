@@ -1,5 +1,6 @@
 # Logs
 *.log
+*.csv
 
 # Python cache
 __pycache__/
