@@ -7,6 +7,11 @@ from unittest import result
 from urllib.parse import _ResultMixinStr
 VERSION = "1.0.0"
 
+logging.basicConfig(
+    filename="logs/ping_checker.log",
+    level=logging.INFO,
+    format="%(asctime)s | %(levelname)s | %(message)s"
+)
 
 def check_host(host):
     result = subprocess.run(
@@ -33,12 +38,22 @@ def load_hosts(filename):
 def save_report(results):
     filename = "ping_report.csv"
 
-    with open(filename, "w", newline="") as file:
+    file_exists = False
+
+    try:
+        with open(filename, "r"):
+            file_exists = True
+    except FileNotFoundError:
+        pass
+
+
+    with open(filename, "a", newline="") as file:
         writer = csv.writer(file)
 
-        writer.writerow(
-            ["Host", "Status", "Time"]
-        )
+        if not file_exists:
+            writer.writerow(
+                ["Host", "Status", "Time"]
+            )
 
         for result in results:
             writer.writerow(result)
@@ -67,11 +82,12 @@ def main():
 
     args = parser.parse_args()
 
-    host = []
+    hosts = []
     results = []
 
     if args.file:
         hosts = load_hosts(args.file)
+        print(hosts)
     
     elif args.host:
         hosts.append(args.host)
@@ -97,13 +113,7 @@ def main():
              ]
     
         )
-
-
-logging.basicConfig(
-    filename="logs/ping_checker.log",
-    level=logging.INFO,
-    format="%(asctime)s | %(levelname)s | %(message)s"
-)
+    save_report(results)
 
 if __name__ == "__main__":
     main()
