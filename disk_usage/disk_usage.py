@@ -1,7 +1,6 @@
 import psutil
+import argparse
 
-
-WARNING_THRESHOLD = 80
 
 
 def format_size(bytes):
@@ -10,8 +9,25 @@ def format_size(bytes):
         2
     )
 
+def main():
 
-def get_disk_usage():
+    parser = argparse.ArgumentParser(
+        description="Disk usage monitoring tool"
+    )
+
+    parser.add_argument(
+        "--threshold",
+        type=int,
+        default=80,
+        help="Warning threshold percentage"
+    )
+
+    args = parser.parse_args()
+
+    get_disk_usage(args.threshold)
+    
+def get_disk_usage(threshold):
+
 
     partitions = psutil.disk_partitions()
 
@@ -42,7 +58,7 @@ def get_disk_usage():
         )
 
 
-        if usage.percent >= WARNING_THRESHOLD:
+        if usage.percent >= threshold:
             print(
                 "WARNING: Disk space is low!"
             )
@@ -52,4 +68,4 @@ def get_disk_usage():
 
 
 if __name__ == "__main__":
-    get_disk_usage()
+    main()
