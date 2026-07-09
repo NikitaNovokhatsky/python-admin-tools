@@ -1,15 +1,37 @@
 import subprocess
+import argparse
 
 
-host = input("Enter host: ")
+def check_host(host):
+    result = subprocess.run(
+        ["ping", host],
+        capture_output=True,
+        text=True
+    )
 
-result = subprocess.run(
-    ["ping", host],
-    capture_output=True,
-    text=True
-)
+    if result.returncode == 0:
+        return True
 
-if result.returncode == 0:
-    print(f"{host} is ONLINE")
-else:
-    print(f"{host} is OFFLINE")
+    return False
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="Check host availability"
+    )
+
+    parser.add_argument(
+        "host",
+        help="IP address or domain name"
+    )
+
+    args = parser.parse_args()
+
+    if check_host(args.host):
+        print(f"{args.host} is ONLINE")
+    else:
+        print(f"{args.host} is OFFLINE")
+
+
+if __name__ == "__main__":
+    main()

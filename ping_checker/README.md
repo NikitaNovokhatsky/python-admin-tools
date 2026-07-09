@@ -25,22 +25,11 @@ The tool uses the system ping command and analyzes the result.
 Run the script:
 
 ```bash
-python ping_checker.py
-
-Enter a host:
-
-google.com
-
-Example output:
+python ping_checker.py google.com
+Example:
 
 google.com is ONLINE
 
-Example with unavailable host:
+Help:
 
-192.168.1.250 is OFFLINE
-
-Future improvements
-Add command-line arguments
-Add logging
-Support checking multiple hosts
-Export results to CSV
+python ping_checker.py --help
