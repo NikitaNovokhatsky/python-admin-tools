@@ -39,10 +39,18 @@ Run the script:
 
 ```bash
 python ping_checker.py google.com
+
+## Multiple hosts checking
+
+You can check multiple hosts from a file.
+
 Example:
 
-google.com is ONLINE
+```bash
+python ping_checker.py --file servers.txt
 
-Help:
+servers.txt example:
 
-python ping_checker.py --help
+google.com
+8.8.8.8
+github.com
